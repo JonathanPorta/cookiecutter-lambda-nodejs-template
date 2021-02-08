@@ -1,0 +1,60 @@
+apiVersion: backstage.io/v1alpha1
+kind: Template
+metadata:
+  # unique name per namespace for the template
+  name: lambda-nodejs
+  # title of the template
+  title: Node.js Lambda Service
+  # a description of the template
+  description: Node.js template for running in AWS Lambda. Includes basic API Gateway config.
+  # some tags to display in the frontend
+  tags:
+    - nodejs
+    - lambda
+spec:
+  # which templater key to use in the templaters builder
+  templater: cookiecutter
+  # what does this template create
+  type: service
+  # if the template is not in the current directory where this definition is kept then specify
+  path: "./"
+  # the schema for the form which is displayed in the frontend.
+  # should follow JSON schema for forms: https://jsonforms.io/
+  schema:
+    required:
+      - project_slug
+      - repo_slug
+      - handler_name
+      - tf_backend_s3_bucket
+      - tf_backend_s3_key
+      - tf_backend_s3_region
+    properties:
+      project_slug:
+        title: Project Slug
+        type: string
+        description: Slug representing the project. Should be short and have dashes. Used for the S3 code bucket and Lambda function names.
+      repo_slug:
+        title: GH Repository Slug
+        type: string
+        description: The part of the GH repo past github.com (JonathanPorta/my-project)
+        default: "JonathanPorta/<project_slug>"
+      handler_name:
+        title: Function Handler Name
+        type: string
+        description: name of primary js file without the extension. index will result in you having an index.js with a function export of "handle". Lambda will then be configured to run index.handle for incoming events.
+        default: "index"
+      tf_backend_s3_bucket:
+        title: State Bucket Name
+        type: string
+        description: Name of the S3 bucket in which TF state should be saved.
+        default: "deployments-state"
+      tf_backend_s3_key:
+        title: State Bucket Path
+        type: string
+        description: Path within the S3 TF bucket for TF state.
+        default: "terraform-state/<project_slug>"
+      tf_backend_s3_region:
+        title: State Bucket Region
+        type: string
+        description: Region for TF State Bucket.
+        default: "us-east-1"
