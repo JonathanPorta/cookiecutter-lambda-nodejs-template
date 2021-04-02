@@ -2,9 +2,7 @@
   "project_slug": "cuddly-waddle",
   "repo_slug": "JonathanPorta/cuddly-waddle",
   "handler_name": "waddle",
-  "tf_backend": {
-    "s3_bucket": "deployments-state",
-    "s3_key": "terraform-state/cuddly-waddle",
-    "s3_region": "us-east-1"
-  }
+  "tf_backend_s3_bucket": "deployments-state",
+  "tf_backend_s3_key": "terraform-state/cuddly-waddle",
+  "tf_backend_s3_region": "us-east-1"
 }
